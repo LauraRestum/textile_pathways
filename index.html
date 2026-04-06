@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Government Textile Innovation Pathways</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #003057;
+    --green:      #6DB33F;
+    --royal:      #0047AB;
+    --forest:     #004F2D;
+    --lgray:      #D4D4D4;
+    --mgray:      #606060;
+    --white:      #FFFFFF;
+    --dark:       #1A1A1A;
+    --muted:      #888888;
+    --card-bg:    #F4F4F4;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    background: #111;
+  }
+
+  /* ── Deck container ── */
+  #deck {
+    position: relative;
+    width: 100%; height: 100%;
+    overflow: hidden;
+  }
+
+  /* ── Slides ── */
+  .slide {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+    z-index: 2;
+  }
+  .slide.prev {
+    opacity: 0;
+    transform: translateX(-60px);
+    z-index: 1;
+  }
+
+  /* ── Slide number ── */
+  .slide-number {
+    position: absolute;
+    bottom: 18px;
+    right: 24px;
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── Navigation buttons ── */
+  #nav {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 100;
+  }
+  #nav button {
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    padding: 10px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+  #nav button:hover { background: #004a82; }
+  #nav button:disabled { background: var(--lgray); color: var(--mgray); cursor: default; }
+
+  /* ── Shared typography ── */
+  .slide-title {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 32px;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+
+  /* ── Two-column helper ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    flex: 1;
+    min-height: 0;
+  }
+  .two-col.wide-left  { grid-template-columns: 3fr 2fr; }
+  .two-col.wide-right { grid-template-columns: 2fr 3fr; }
+
+  /* ── Bullet list with green markers ── */
+  .bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .bullet-list li {
+    font-size: 15px;
+    color: var(--dark);
+    line-height: 1.5;
+    padding-left: 20px;
+    position: relative;
+  }
+  .bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px;
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* ── Green left-border accent panel ── */
+  .accent-panel {
+    border-left: 6px solid var(--green);
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── Card base ── */
+  .card {
+    background: var(--card-bg);
+    border-left: 6px solid var(--green);
+    padding: 20px 18px;
+    border-radius: 4px;
+  }
+  .card-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .card ul li {
+    font-size: 13px;
+    color: var(--dark);
+    line-height: 1.5;
+    padding-left: 12px;
+    position: relative;
+  }
+  .card ul li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ── Navy stat card ── */
+  .navy-card {
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 24px;
+  }
+  .navy-card .big-num {
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+  }
+  .navy-card .big-label {
+    font-size: 16px;
+    color: var(--white);
+    margin-top: 10px;
+    font-weight: 600;
+  }
+  .navy-card .sub-label {
+    font-size: 13px;
+    color: var(--lgray);
+    margin-top: 6px;
+  }
+
+  /* ── Image panel / placeholder ── */
+  .img-panel {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .img-panel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    flex: 1;
+  }
+  .img-placeholder {
+    flex: 1;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lgray);
+    font-size: 14px;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 0.5px;
+    min-height: 180px;
+  }
+  .img-caption {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 14px;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+
+  /* ── Bottom green bar ── */
+  .bottom-bar {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 5px;
+    background: var(--green);
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 1 — Title
+  ─────────────────────────────────────── */
+  #slide-1 {
+    background: var(--navy);
+    flex-direction: row;
+    align-items: stretch;
+    padding: 0;
+  }
+  #slide-1 .s1-left {
+    flex: 0 0 55%;
+    padding: 60px 48px 60px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+    position: relative;
+  }
+  #slide-1 .s1-right {
+    flex: 1;
+    position: relative;
+  }
+  .logo-placeholder {
+    width: 180px;
+    height: 56px;
+    border: 2px solid var(--white);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+  #slide-1 h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  #slide-1 .subtitle {
+    font-size: 22px;
+    color: var(--green);
+    font-weight: 500;
+    line-height: 1.3;
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 3 — 2x2 grid
+  ─────────────────────────────────────── */
+  .grid-2x2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 4 — Key Funding Pathways
+  ─────────────────────────────────────── */
+  .pathway-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    align-items: start;
+    padding-top: 16px;
+    border-top: 2px solid var(--green);
+  }
+  .pathway-row + .pathway-row { margin-top: 4px; }
+  .pathway-acronym {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    padding-top: 2px;
+  }
+  .pathway-desc {
+    font-size: 15px;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+  .pathway-desc em {
+    color: var(--mgray);
+    font-style: normal;
+    font-size: 13px;
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 5 — Flow Diagram
+  ─────────────────────────────────────── */
+  .flow-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+  }
+  .flow-diagram {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .flow-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .flow-box {
+    background: var(--navy);
+    color: var(--white);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 14px 22px;
+    border-radius: 4px;
+    white-space: nowrap;
+    text-align: center;
+  }
+  .flow-label {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    text-align: center;
+    max-width: 110px;
+    line-height: 1.4;
+  }
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    padding-top: 14px;
+    margin: 0 4px;
+  }
+  .flow-arrow svg {
+    width: 28px;
+    height: 24px;
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 6 — 2x3 icon grid
+  ─────────────────────────────────────── */
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+  }
+  .icon-cell {
+    background: var(--card-bg);
+    border: 1px solid var(--lgray);
+    border-radius: 4px;
+    padding: 20px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .icon-sq {
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--green);
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+  .icon-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 9 — Three callout blocks
+  ─────────────────────────────────────── */
+  .callout-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+  }
+  .callout-block {
+    background: var(--card-bg);
+    border-top: 6px solid var(--green);
+    border-radius: 4px;
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .callout-header {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+  }
+  .callout-body {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  /* ───────────────────────────────────────
+     SLIDE 11 — Numbered steps
+  ─────────────────────────────────────── */
+  .steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    flex: 1;
+    justify-content: center;
+  }
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .step-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--green);
+    color: var(--white);
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .step-desc {
+    font-size: 14px;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .slide { padding: 32px 28px; }
+    .slide-title { font-size: 28px; margin-bottom: 20px; }
+    .two-col, .two-col.wide-left, .two-col.wide-right {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .grid-2x2 { grid-template-columns: 1fr; }
+    .icon-grid { grid-template-columns: repeat(2, 1fr); }
+    .callout-grid { grid-template-columns: 1fr; }
+    .flow-diagram { flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .flow-arrow { display: none; }
+    #slide-1 { flex-direction: column; }
+    #slide-1 .s1-left { flex: 0 0 auto; padding: 40px 28px 20px; }
+    #slide-1 .s1-right { min-height: 200px; }
+    #slide-1 h1 { font-size: 28px; }
+    #slide-1 .subtitle { font-size: 18px; }
+    .navy-card .big-num { font-size: 40px; }
+    .pathway-row { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (max-width: 600px) {
+    .slide { padding: 24px 18px; }
+    .icon-grid { grid-template-columns: 1fr; }
+    .callout-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- ═══════════════════════════════════
+       SLIDE 1 — Title
+  ═══════════════════════════════════ -->
+  <div class="slide active" id="slide-1" data-index="0">
+    <div class="s1-left">
+      <div class="logo-placeholder">ENVISION LOGO</div>
+      <h1>Government Textile Innovation Pathways</h1>
+      <p class="subtitle">Partnering to Accelerate Development and Transition</p>
+    </div>
+    <div class="s1-right">
+      <div class="img-placeholder" style="height:100%; border-radius:0; min-height:0;">
+        [ Facility Photo ]
+      </div>
+    </div>
+    <div class="bottom-bar"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 2 — Context
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-2" data-index="1">
+    <h2 class="slide-title">Context</h2>
+    <div class="two-col wide-left" style="flex:1; min-height:0; align-items:center;">
+      <div class="accent-panel">
+        <ul class="bullet-list">
+          <li>Increasing demand for advanced textile systems in defense applications</li>
+          <li>Government funding exists to support innovation in this space</li>
+          <li>Gap between research and scalable production</li>
+        </ul>
+      </div>
+      <div class="navy-card" style="height:100%; max-height:280px; align-self:center;">
+        <div class="big-num">6+</div>
+        <div class="big-label">Active Government Funding Vehicles</div>
+        <div class="sub-label">Spanning R&amp;D through full-scale production</div>
+      </div>
+    </div>
+    <div class="slide-number">2 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 3 — Funding Landscape Overview
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-3" data-index="2">
+    <h2 class="slide-title">Funding Landscape Overview</h2>
+    <div class="grid-2x2">
+      <div class="card">
+        <div class="card-label">Research &amp; Early Development</div>
+        <ul>
+          <li>DEVCOM ARL BAA (W911NF-23-S-0001)</li>
+          <li>Soldier Center BAA (W911QY-25-R-0023)</li>
+          <li>DEPSCoR</li>
+          <li>CRADA</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label">Innovation Programs</div>
+        <ul>
+          <li>SBIR</li>
+          <li>STTR</li>
+          <li>Army xTech / xTechSearch</li>
+          <li>Army xTech Soldier Lethality</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label">Rapid Prototyping</div>
+        <ul>
+          <li>OTA — NAC</li>
+          <li>MCDC</li>
+          <li>DIBC</li>
+          <li>DIU CSO</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-label">Scale &amp; Manufacturing</div>
+        <ul>
+          <li>AFFOA</li>
+          <li>Manufacturing USA Institutes</li>
+          <li>Defense Production Act Title III</li>
+        </ul>
+      </div>
+    </div>
+    <div class="slide-number">3 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 4 — Key Funding Pathways
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-4" data-index="3">
+    <h2 class="slide-title">Key Funding Pathways</h2>
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:space-around; min-height:0;">
+      <div class="pathway-row">
+        <div class="pathway-acronym">BAA</div>
+        <div class="pathway-desc">Open solicitation for research and early-stage development in advanced materials and soldier systems. Solicitations: W911NF-23-S-0001 (ARL) and W911QY-25-R-0023 (Soldier Center)</div>
+      </div>
+      <div class="pathway-row">
+        <div class="pathway-acronym">SBIR / STTR</div>
+        <div class="pathway-desc">Small business-led innovation; nonprofits eligible as subcontractors, research partners, and testing laboratories</div>
+      </div>
+      <div class="pathway-row">
+        <div class="pathway-acronym">OTA</div>
+        <div class="pathway-desc">Rapid prototyping and transition through consortium membership; no FAR requirements; fastest path from concept to fielding</div>
+      </div>
+      <div class="pathway-row">
+        <div class="pathway-acronym">AFFOA / DPA Title III</div>
+        <div class="pathway-desc">Manufacturing scale-up and industrial base investment; supports transition from prototype to production-ready systems</div>
+      </div>
+    </div>
+    <div class="slide-number">4 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 5 — How Projects Progress
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-5" data-index="4">
+    <h2 class="slide-title">How Projects Progress</h2>
+    <div class="flow-wrap">
+      <div class="flow-diagram">
+
+        <div class="flow-step">
+          <div class="flow-box">R&amp;D</div>
+          <div class="flow-label">BAA · DEPSCoR</div>
+        </div>
+
+        <div class="flow-arrow">
+          <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-box">Prototype</div>
+          <div class="flow-label">SBIR/STTR · OTA</div>
+        </div>
+
+        <div class="flow-arrow">
+          <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-box">Testing</div>
+          <div class="flow-label">OTA · CRADA</div>
+        </div>
+
+        <div class="flow-arrow">
+          <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-box">Scale</div>
+          <div class="flow-label">AFFOA · DPA III</div>
+        </div>
+
+        <div class="flow-arrow">
+          <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="flow-step">
+          <div class="flow-box">Production</div>
+          <div class="flow-label">&nbsp;</div>
+        </div>
+
+      </div>
+    </div>
+    <div class="slide-number">5 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 6 — Key Innovation Areas
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-6" data-index="5">
+    <h2 class="slide-title">Key Innovation Areas Being Funded</h2>
+    <div class="icon-grid">
+      <div class="icon-cell">
+        <div class="icon-sq"></div>
+        <div class="icon-label">Advanced Fibers &amp; Yarns</div>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-sq"></div>
+        <div class="icon-label">Smart Fabrics / E-Textiles</div>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-sq"></div>
+        <div class="icon-label">Protective Textile Materials</div>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-sq"></div>
+        <div class="icon-label">Thermal Management</div>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-sq"></div>
+        <div class="icon-label">Antimicrobial Textiles</div>
+      </div>
+      <div class="icon-cell">
+        <div class="icon-sq"></div>
+        <div class="icon-label">Wearable Technologies</div>
+      </div>
+    </div>
+    <div class="slide-number">6 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 7 — Organization A: Material Innovation
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-7" data-index="6">
+    <h2 class="slide-title">Organization A: Material Innovation</h2>
+    <div class="two-col wide-left" style="flex:1; min-height:0; align-items:stretch;">
+      <div class="accent-panel">
+        <ul class="bullet-list">
+          <li>Advanced material development and performance-driven design</li>
+          <li>Research and innovation capabilities in functional and technical textiles</li>
+          <li>Established R&amp;D infrastructure with government and academic partnerships</li>
+        </ul>
+      </div>
+      <div class="img-panel">
+        <div class="img-placeholder">[ Facility Photo ]</div>
+        <div class="img-caption">Innovation &amp; Prototyping Laboratory</div>
+      </div>
+    </div>
+    <div class="slide-number">7 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 8 — Organization B: Manufacturing & Transition
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-8" data-index="7">
+    <h2 class="slide-title">Organization B: Manufacturing &amp; Transition</h2>
+    <div class="two-col wide-left" style="flex:1; min-height:0; align-items:stretch;">
+      <div class="accent-panel">
+        <ul class="bullet-list">
+          <li>Prototyping and cut &amp; sew capabilities for government garment systems</li>
+          <li>Integration of advanced materials into production-ready textile systems</li>
+          <li>Small batch manufacturing and rapid iteration — MOQ-flexible</li>
+          <li>Transition partner for scalable DoD production: Berry compliant, ISO 9001:2015, DCMA authorized</li>
+          <li>90+ years domestic manufacturing; existing DoD production history including ACU trousers, ETOOL pouches, and Cold Weather Hand Warmers</li>
+        </ul>
+      </div>
+      <div class="img-panel">
+        <div class="img-placeholder">[ Facility Photo ]</div>
+        <div class="img-caption">Envision Dallas — Textile Manufacturing</div>
+      </div>
+    </div>
+    <div class="slide-number">8 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 9 — Combined Value
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-9" data-index="8">
+    <h2 class="slide-title">Combined Value</h2>
+    <div class="callout-grid">
+      <div class="callout-block">
+        <div class="callout-header">Material + Manufacturing</div>
+        <div class="callout-body">Advanced material innovation integrated with proven Berry-compliant production capability</div>
+      </div>
+      <div class="callout-block">
+        <div class="callout-header">Faster Transition</div>
+        <div class="callout-body">Reduced time from prototype to deployable system through coordinated teaming structure</div>
+      </div>
+      <div class="callout-block">
+        <div class="callout-header">Funded Opportunity Access</div>
+        <div class="callout-body">Combined eligibility to pursue BAA, OTA, SBIR/STTR, and consortium programs together</div>
+      </div>
+    </div>
+    <div class="slide-number">9 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 10 — Example Opportunity Area
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-10" data-index="9">
+    <h2 class="slide-title">Example Opportunity Area</h2>
+    <div class="two-col wide-left" style="flex:1; min-height:0; align-items:stretch;">
+      <div class="accent-panel" style="justify-content:flex-start; gap:20px;">
+        <ul class="bullet-list">
+          <li>Protective / bio-chemical garment systems (DEVCOM bio/chem program area)</li>
+          <li>Early-stage exploration only — no program details defined; this is a first dialogue</li>
+          <li>Potential fit within MCDC OTA (Medical CBRN Defense Consortium) — focus: chemical/biological protective materials</li>
+        </ul>
+        <p style="font-size:11px; color:var(--muted); font-style:italic; line-height:1.5; margin-top:8px;">
+          This represents one illustrative area only. No product, design, or solution is proposed or implied.
+        </p>
+      </div>
+      <div class="navy-card">
+        <div style="font-size:14px; line-height:1.8; text-align:left; width:100%;">
+          <div style="margin-bottom:12px;"><span style="color:var(--green); font-weight:700;">Relevant Pathway:</span><br>MCDC OTA</div>
+          <div style="margin-bottom:12px;"><span style="color:var(--green); font-weight:700;">Focus:</span><br>Protective / CB Materials</div>
+          <div><span style="color:var(--green); font-weight:700;">Stage:</span><br>Early Exploration</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">10 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 11 — Engagement Approach
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-11" data-index="10">
+    <h2 class="slide-title">Engagement Approach</h2>
+    <div class="steps-list">
+      <div class="step-row">
+        <div class="step-circle">1</div>
+        <div class="step-content">
+          <div class="step-title">Identify</div>
+          <div class="step-desc">Align on opportunity areas within active funding vehicles</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-circle">2</div>
+        <div class="step-content">
+          <div class="step-title">Select</div>
+          <div class="step-desc">Choose appropriate funding pathway and consortium entry point</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-circle">3</div>
+        <div class="step-content">
+          <div class="step-title">Structure</div>
+          <div class="step-desc">Define team roles, responsibilities, and teaming agreement terms</div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-circle">4</div>
+        <div class="step-content">
+          <div class="step-title">Pursue</div>
+          <div class="step-desc">Submit collaboratively and execute funded opportunities together</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-number">11 / 12</div>
+  </div>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 12 — Next Steps
+  ═══════════════════════════════════ -->
+  <div class="slide" id="slide-12" data-index="11">
+    <h2 class="slide-title">Next Steps</h2>
+    <div style="flex:1; display:flex; align-items:center; min-height:0;">
+      <div class="accent-panel" style="width:100%;">
+        <ul class="bullet-list">
+          <li>Align on specific areas of interest and mutual capability fit</li>
+          <li>Identify near-term funded opportunities to pursue together</li>
+          <li>Explore teaming agreement structure and formalize partnership</li>
+        </ul>
+      </div>
+    </div>
+    <div style="text-align:center; padding-bottom:24px;">
+      <span style="font-size:11px; color:var(--muted);">Envision, Inc. · EnvisionUS.com</span>
+    </div>
+    <div class="bottom-bar"></div>
+    <div class="slide-number">12 / 12</div>
+  </div>
+
+</div><!-- /#deck -->
+
+<!-- ── Navigation buttons ── -->
+<div id="nav">
+  <button id="btn-prev" onclick="navigate(-1)" disabled>← Prev</button>
+  <button id="btn-next" onclick="navigate(1)">Next →</button>
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total  = slides.length;
+  let current  = 0;
+
+  function goTo(n) {
+    if (n < 0 || n >= total) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('prev');
+    // remove 'prev' after transition so it doesn't linger
+    const prev = slides[current];
+    setTimeout(() => prev.classList.remove('prev'), 450);
+    current = n;
+    slides[current].classList.add('active');
+    document.getElementById('btn-prev').disabled = (current === 0);
+    document.getElementById('btn-next').disabled = (current === total - 1);
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown')  navigate(1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')    navigate(-1);
+    if (e.key === 'Escape')                                goTo(0);
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  let touchStartY = 0;
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchStartX;
+    const dy = e.changedTouches[0].screenY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      navigate(dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
