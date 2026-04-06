@@ -6,13 +6,13 @@
 <title>Government Textile Innovation Pathways</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --navy:       #003057;
-    --green:      #6DB33F;
+    --green:      #0047AB;
     --royal:      #0047AB;
     --forest:     #004F2D;
     --lgray:      #D4D4D4;
@@ -42,7 +42,7 @@
     position: absolute;
     inset: 0;
     width: 100%; height: 100%;
-    padding: 48px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
     background: var(--white);
@@ -104,10 +104,11 @@
   /* ── Shared typography ── */
   .slide-title {
     font-size: 38px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--navy);
-    margin-bottom: 32px;
+    margin-bottom: 16px;
     line-height: 1.2;
+    letter-spacing: -0.5px;
     flex-shrink: 0;
   }
 
@@ -115,7 +116,7 @@
   .two-col {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 24px;
     flex: 1;
     min-height: 0;
   }
@@ -127,12 +128,13 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 6px;
   }
   .bullet-list li {
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 400;
     color: var(--dark);
-    line-height: 1.5;
+    line-height: 1.35;
     padding-left: 20px;
     position: relative;
   }
@@ -159,14 +161,14 @@
   .card {
     background: var(--card-bg);
     border-left: 6px solid var(--green);
-    padding: 20px 18px;
-    border-radius: 4px;
+    padding: 14px;
+    border-radius: 3px;
   }
   .card-label {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
     color: var(--green);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-transform: uppercase;
     letter-spacing: 0.3px;
   }
@@ -174,12 +176,13 @@
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
   }
   .card ul li {
     font-size: 13px;
+    font-weight: 400;
     color: var(--dark);
-    line-height: 1.5;
+    line-height: 1.35;
     padding-left: 12px;
     position: relative;
   }
@@ -303,9 +306,10 @@
   }
   #slide-1 h1 {
     font-size: 40px;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--white);
     line-height: 1.2;
+    letter-spacing: -0.5px;
   }
   #slide-1 .subtitle {
     font-size: 22px;
@@ -320,7 +324,7 @@
   .grid-2x2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 14px;
     flex: 1;
     min-height: 0;
   }
@@ -333,10 +337,11 @@
     grid-template-columns: 140px 1fr;
     gap: 24px;
     align-items: start;
-    padding-top: 16px;
-    border-top: 2px solid var(--green);
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-top: 1px solid var(--green);
   }
-  .pathway-row + .pathway-row { margin-top: 4px; }
+  .pathway-row + .pathway-row { margin-top: 0; }
   .pathway-acronym {
     font-size: 18px;
     font-weight: 700;
@@ -344,9 +349,10 @@
     padding-top: 2px;
   }
   .pathway-desc {
-    font-size: 15px;
+    font-size: 14px;
+    font-weight: 400;
     color: var(--dark);
-    line-height: 1.5;
+    line-height: 1.35;
   }
   .pathway-desc em {
     color: var(--mgray);
@@ -410,15 +416,15 @@
   .icon-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    gap: 14px;
     flex: 1;
     min-height: 0;
   }
   .icon-cell {
     background: var(--card-bg);
     border: 1px solid var(--lgray);
-    border-radius: 4px;
-    padding: 20px 12px;
+    border-radius: 3px;
+    padding: 14px 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -445,18 +451,18 @@
   .callout-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 14px;
     flex: 1;
     min-height: 0;
   }
   .callout-block {
     background: var(--card-bg);
     border-top: 6px solid var(--green);
-    border-radius: 4px;
-    padding: 22px 18px;
+    border-radius: 3px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
   .callout-header {
     font-size: 16px;
@@ -465,9 +471,10 @@
     line-height: 1.3;
   }
   .callout-body {
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 400;
     color: var(--dark);
-    line-height: 1.5;
+    line-height: 1.35;
   }
 
   /* ───────────────────────────────────────
@@ -476,7 +483,7 @@
   .steps-list {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 12px;
     flex: 1;
     justify-content: center;
   }
@@ -507,14 +514,15 @@
   }
   .step-desc {
     font-size: 14px;
+    font-weight: 400;
     color: var(--dark);
-    line-height: 1.5;
+    line-height: 1.35;
   }
 
   /* ── Responsive ── */
   @media (max-width: 900px) {
     .slide { padding: 32px 28px; }
-    .slide-title { font-size: 28px; margin-bottom: 20px; }
+    .slide-title { font-size: 28px; margin-bottom: 12px; letter-spacing: -0.5px; }
     .two-col, .two-col.wide-left, .two-col.wide-right {
       grid-template-columns: 1fr;
       gap: 20px;
@@ -522,8 +530,9 @@
     .grid-2x2 { grid-template-columns: 1fr; }
     .icon-grid { grid-template-columns: repeat(2, 1fr); }
     .callout-grid { grid-template-columns: 1fr; }
-    .flow-diagram { flex-wrap: wrap; justify-content: center; gap: 8px; }
-    .flow-arrow { display: none; }
+    .flow-diagram { flex-direction: column; align-items: center; gap: 0; }
+    .flow-arrow { transform: rotate(90deg); margin: 2px 0; padding-top: 0; }
+    .flow-step { width: 100%; max-width: 240px; }
     #slide-1 { flex-direction: column; }
     #slide-1 .s1-left { flex: 0 0 auto; padding: 40px 28px 20px; }
     #slide-1 .s1-right { min-height: 200px; }
@@ -606,11 +615,12 @@
       </div>
       <div class="card">
         <div class="card-label">Rapid Prototyping</div>
+        <p style="font-size:12px; color:var(--mgray); font-style:italic; margin-bottom:6px;">OTA Consortia:</p>
         <ul>
-          <li>OTA — NAC</li>
-          <li>MCDC</li>
-          <li>DIBC</li>
-          <li>DIU CSO</li>
+          <li>National Armaments Consortium (NAC)</li>
+          <li>Medical CBRN Defense Consortium (MCDC)</li>
+          <li>Defense Industrial Base Consortium (DIBC)</li>
+          <li>Defense Innovation Unit CSO (DIU)</li>
         </ul>
       </div>
       <div class="card">
@@ -666,7 +676,7 @@
 
         <div class="flow-arrow">
           <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#0047AB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
 
@@ -677,7 +687,7 @@
 
         <div class="flow-arrow">
           <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#0047AB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
 
@@ -688,7 +698,7 @@
 
         <div class="flow-arrow">
           <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#0047AB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
 
@@ -699,7 +709,7 @@
 
         <div class="flow-arrow">
           <svg viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#6DB33F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12 H22 M22 12 L14 5 M22 12 L14 19" stroke="#0047AB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
 
@@ -760,9 +770,9 @@
           <li>Established R&amp;D infrastructure with government and academic partnerships</li>
         </ul>
       </div>
-      <div class="img-panel">
-        <img src="./images/slide7-lab.jpg" alt="Innovation and Prototyping Laboratory">
-        <div class="img-caption">Innovation &amp; Prototyping Laboratory</div>
+      <div class="img-panel" style="position:relative;">
+        <img src="./images/slide7-lab.jpg" alt="Innovation and Prototyping Laboratory" style="width:100%; display:block; object-fit:cover; flex:1;">
+        <div class="img-caption" style="width:100%; margin-top:0;">Innovation &amp; Prototyping Laboratory</div>
       </div>
     </div>
     <div class="slide-number">7 / 12</div>
@@ -800,9 +810,10 @@
   <!-- ═══════════════════════════════════
        SLIDE 9 — Combined Value
   ═══════════════════════════════════ -->
-  <div class="slide" id="slide-9" data-index="8">
-    <h2 class="slide-title">Combined Value</h2>
-    <div class="callout-grid">
+  <div class="slide" id="slide-9" data-index="8" style="position:relative;">
+    <div style="position:absolute; inset:0; background:url('./images/slide8-floor.jpg') center/cover no-repeat; opacity:0.08; pointer-events:none; z-index:0;"></div>
+    <h2 class="slide-title" style="position:relative; z-index:1;">Combined Value</h2>
+    <div class="callout-grid" style="position:relative; z-index:1;">
       <div class="callout-block">
         <div class="callout-header">Material + Manufacturing</div>
         <div class="callout-body">Advanced material innovation integrated with proven Berry-compliant production capability</div>
